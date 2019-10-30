@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#get current user, used in options c and d.
+user="$(whoami)"
+
 while getopts "abcde" c
 do
 	case $c in
@@ -10,11 +13,14 @@ do
 			
 			ps -o pri -p $p
 	  		;;
-		c) user="$(whoami)"
-			printf "Number of processes running under current user "$user" is: " 
+		c) printf "Number of processes running under current user "$user" is: " 
 			ps -U "$user" | wc -l
 			;;
-		d) echo "d" ;;
-		e) echo "e" ;;
+		d) printf "Number of open file descriptors for user "$user" is: "
+		       lsof -u "$user" |wc -l	
+			printf "Number of open REGULAR files for user "$user" is: "
+		       lsof -u "$user" | grep 'REG' | wc -l
+	       	       ;;
+	       e) printf "stack size is: "$(ulimit -s)"kB\n"
 	esac
 done
