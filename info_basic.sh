@@ -1,5 +1,10 @@
 #!/bin/bash
 
+#Created by Jack Edwards
+#RMIT student number S3727853
+
+printf "\e[4mBasic System Information\e[0m\n"
+
 case $1 in
 	1)
 		#Print free memory

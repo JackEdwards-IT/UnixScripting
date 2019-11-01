@@ -1,6 +1,11 @@
 #!/bin/bash
 
+#Created by Jack Edwards
+#RMIT student number S3727853
+
 #get current user, used in options c and d.
+
+printf "\e[4mBasic System Information with Post Processing\e[0m\n"
 user="$(whoami)"
 
 while getopts "abcde" c
