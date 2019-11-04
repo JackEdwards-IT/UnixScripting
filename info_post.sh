@@ -3,29 +3,50 @@
 #Created by Jack Edwards
 #RMIT student number S3727853
 
-#get current user, used in options c and d.
+printf=/usr/bin/printf
+echo=/bin/echo
 
-printf "\e[4mBasic System Information with Post Processing\e[0m\n"
+#Hold script output on screen until user hits enter
+go_back () {
+	local choice
+	printf "\nPlease press Enter to return to main menu : "
+	read choice
+	case $choice in
+		*)
+			;;
+	esac
+}
+
+
+
+
+#get current user, used in options c and d.
 user="$(whoami)"
 
+#Print menu and handle inputs
+printf "\e[4mBasic System Information with Post Processing\e[0m\n"
 while getopts "abcde" c
 do
 	case $c in
-		a) printf "Number of CPU cores on this system is: "
-		       	nproc ;;
-		b) echo "Current process priority is"
+		a) printf "\nNumber of CPU cores on this system is: "
+		       	nproc; go_back ;;
+
+		b) printf "\nCurrent process priority is "
 			p=$$
-			
 			ps -o pri -p $p
-	  		;;
-		c) printf "Number of processes running under current user "$user" is: " 
+	  		go_back ;;
+
+		c) printf "\nNumber of processes running under current user "$user" is: " 
 			ps -U "$user" | wc -l
-			;;
-		d) printf "Number of open file descriptors for user "$user" is: "
+			go_back ;;
+
+		d) printf "\nNumber of open file descriptors for user "$user" is: "
 		       lsof -u "$user" |wc -l	
-			printf "Number of open REGULAR files for user "$user" is: "
+			printf "\nNumber of open REGULAR files for user "$user" is: "
 		       lsof -u "$user" | grep 'REG' | wc -l
-	       	       ;;
-	       e) printf "stack size is: "$(ulimit -s)"kB\n"
-	esac
+	       	       go_back ;;
+
+	       e) printf "\nstack size is: "$(ulimit -s)"kB\n"
+		       go_back ;;
+	esac	
 done
