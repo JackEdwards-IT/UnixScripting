@@ -10,7 +10,7 @@ printf=/usr/bin/printf
 go_back () {
 	local choice	
 	printf "\nPlease press Enter to return to main menu : "
-	read choice
+	read -r choice
 	case $choice in
 		*)
 			;;
@@ -23,26 +23,25 @@ go_back () {
 printf "\e[4mBasic System Information\e[0m\n"
 
 case $1 in
-	1)
-		#Print free memory
+	1)	#Print free memory
 		printf "Occupied and free memory in MB\n\n"
 		free -m
 		go_back 
 		;;
-	2)
-		#Print free disk space
+
+	2)	#Print free disk space (removing some fstypes for cleaner output)
 		printf "Occupied and free disk space\n\n"
 	       	df -hx squashfs -x tmpfs --total
 		go_back
 		;;
-	3)
-		#Print connection info
+
+	3)	#Print connection info
 		printf "System Connection Info\n\n"
 		ifconfig -a | grep -v "RX\|TX"
 		go_back
 		;;
-	4)
-		#Print system load average
+
+	4)	#Print system load average
 		printf "System Load Average\n\n"
 		w
 		go_back

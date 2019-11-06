@@ -10,7 +10,7 @@ echo=/bin/echo
 go_back () {
 	local choice
 	printf "\nPlease press Enter to return to main menu : "
-	read choice
+	read -r choice
 	case $choice in
 		*)
 			;;
@@ -23,7 +23,7 @@ go_back () {
 #get current user, used in options c and d.
 user="$(whoami)"
 
-#Print menu and handle inputs
+#Case statment for getopts options passed in
 printf "\e[4mBasic System Information with Post Processing\e[0m\n"
 while getopts "abcde" c
 do
@@ -36,17 +36,20 @@ do
 			ps -o pri -p $p
 	  		go_back ;;
 
-		c) printf "\nNumber of processes running under current user "$user" is: " 
+		c) printf "%s\nNumber of processes running under current user ""$user"" is: " 
 			ps -U "$user" | wc -l
 			go_back ;;
 
-		d) printf "\nNumber of open file descriptors for user "$user" is: "
+		d) printf "%s\nNumber of open file descriptors for user ""$user"" is: "
 		       lsof -u "$user" |wc -l	
-			printf "\nNumber of open REGULAR files for user "$user" is: "
-		       lsof -u "$user" | grep 'REG' | wc -l
+			printf "%s\nNumber of open REGULAR files for user ""$user"" is: "
+		       lsof -u "$user" | grep -c 'REG'
 	       	       go_back ;;
 
-	       e) printf "\nstack size is: "$(ulimit -s)"kB\n"
+	       e) printf "%s\nstack size is: ""$(ulimit -s)""kB\n"
 		       go_back ;;
+	       
+	       *) printf "Somthing went wrong with the input passed in.";go_back ;;       
 	esac	
+
 done

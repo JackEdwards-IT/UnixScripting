@@ -5,7 +5,10 @@
 
 printf=/usr/bin/printf
 
+#Disable CTRL C per spec
+trap '' INT
 
+#Submenu to call the basic information script passing in an argument
 menu_one () {
 
 	clear
@@ -19,8 +22,9 @@ menu_one () {
 	printf "\nEnter your selection: "
 
 	local choice
-	read choice
-
+	read -r choice
+	
+	#Arguments are simply read as $1 in remote script. Options are 1 through 4
 	case $choice in
 		1)	clear; sh ./info_basic.sh 1
 			;;
@@ -42,6 +46,7 @@ menu_one () {
 	esac
 }
 
+#submenu to call the basic info with post processing script passing in argument
 menu_two () {
 
 	clear
@@ -56,8 +61,9 @@ menu_two () {
 	printf "\nEnter your selection: "
 
 	local choice
-	read choice
+	read -r choice
 
+	#Arguments are handled by getopts in remote script -a through -e
 	case $choice in
 		1)	clear; sh ./info_post.sh -a
 			;;
@@ -82,9 +88,10 @@ menu_two () {
 	esac
 }
 
+#main menu
 
 menu () {
-	clear
+	#clear
 	printf "\e[4mMenu System\e[0m\n"
 	printf "===========================\n"
 	printf "1) Basic System Information\n"
@@ -96,12 +103,16 @@ menu () {
 	return
 }
 
-QUIT=0
+QUIT="0"
 while [ "$QUIT" == "0" ]
 do
 	menu
-	read choice
+	read -r choice
 
+	# Cases 1 and 2 call submenus that then call appropriate script passing in arguments
+	# 3 calls the find script directly
+
+	# 4 has not been implemented
 	case $choice in
 		1) 	menu_one
 			;;
@@ -111,10 +122,9 @@ do
 		3)	clear; sh ./find.sh
 			;;
 
-		4)	echo "4"
-			;;
+		4)	;;
 
-		(q | Q)	QUIT="1"; echo $QUIT
+		(q | Q)	QUIT="1"; printf "Goodbye"
 			;;
 
 		*)      clear
