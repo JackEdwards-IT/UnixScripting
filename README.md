@@ -22,5 +22,4 @@ Not implemented
 
 Requirment 4 - basic_profiler.sh
 
-	I did not even try to implement this as this assignment has managed
-	to defeat me completely.
+	I did not even try to implement this as the previous requirment was beyond me..
