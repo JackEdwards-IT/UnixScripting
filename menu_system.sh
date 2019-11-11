@@ -119,7 +119,7 @@ do
 		2)	menu_two
 			;;
 
-		3)	clear; sh ./find.sh
+		3)	clear; sh ./find_script.sh
 			;;
 
 		4)	;;
