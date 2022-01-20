@@ -1,7 +1,6 @@
 # UnixScripting
-Unix Admin A2 - Scripting
 
-Jack Edwards - S3727853
+TODO: This is an old uni assignment. I have placed it here to complete at some stage as a good bash refresher.
 
 Working Features Part B
 ------------------------
